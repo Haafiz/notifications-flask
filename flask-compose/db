@@ -1,0 +1,4 @@
+Notification
+
+id, user_id, notification_text, type, medium_info, queued_at, acknowledged_at
+

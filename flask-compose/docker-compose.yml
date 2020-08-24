@@ -1,0 +1,33 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes: 
+      - "../flaskapp/:/flask/app"
+    command: "flask run"
+  mysql:
+    build: ./mysql/
+    ports:
+      - "3307:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_USER=root"
+      - "MYSQL_PASSWORD=root"
+    volumes:
+      - ../flaskapp/mysql:/var/lib/mysql
+  activemq:
+    image: webcenter/activemq
+    ports:
+      - "8162:8161"
+      - "61616:61616"
+      - "61614:61613"
+    environment:
+      - 'ACTIVEMQ_USERS_myproducer=producerpassword'
+      - 'ACTIVEMQ_GROUPS_writes=myproducer'
+    volumes:
+      - "./conf:/mnt/conf"
+      - "./data:/mnt/data"
+
+
